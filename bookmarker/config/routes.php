@@ -102,3 +102,9 @@ Router::scope('/', function (RouteBuilder $routes) {
  * });
  * ```
  */
+
+Router::scope('/api', function (RouteBuilder $routes) {
+    // No $routes->applyMiddleware() here.
+    // Connect API actions here.
+    $routes->connect('/', ['controller' => 'Receiver', 'action' => 'receive']);
+});
