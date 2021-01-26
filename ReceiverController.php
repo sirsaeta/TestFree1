@@ -1,22 +1,26 @@
 <?php
 
 namespace App\Controller;
+use Cake\Log\Log;
 
 class ReceiverController extends AppController
 {
     public function receive()
     {
         $this->layout = false;
-        $response = array('status'=>'failed', 'message'=>'HTTP method not allowed');
+        $response = $this->response;
+        $result = array('status'=>'failed', 'message'=>'HTTP method not allowed');
         if ($this->request->is('post')) {
             $data = $this->request->input('json_decode', true);
             if(empty($data)){
                 $data = $this->request->getData();
             }
-            $response = $data;
-            // $this->Flash->success(__('Your article has been saved.'));
+            $result = $data;
+
+            Log::info(json_encode($result), ['scope' => ['receiveLog']]);
         }
-        $this->response->body(json_encode($response));
-        return $this->response->send();
+        $response = $response->withType('application/json')
+        ->withStringBody(json_encode($result));
+        return $response;
     }
 }

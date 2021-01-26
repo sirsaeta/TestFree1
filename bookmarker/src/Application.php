@@ -29,6 +29,11 @@ use Cake\Routing\Middleware\RoutingMiddleware;
  */
 class Application extends BaseApplication
 {
+    public function elasticSearch()
+    {
+        $this->addPlugin('Cake/ElasticSearch');
+    }
+    
     /**
      * {@inheritDoc}
      */
